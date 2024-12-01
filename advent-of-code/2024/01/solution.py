@@ -22,15 +22,15 @@ def part_1(data: list[str]) -> int:
     right_sorted: list[int] = []
     for line in data:
         num1, num2 = line.split()
-        left_sorted.append(num1)
-        right_sorted.append(num2)
+        left_sorted.append(int(num1))
+        right_sorted.append(int(num2))
     left_sorted.sort()
     right_sorted.sort()
 
     res = 0
     for idx, left in enumerate(left_sorted):
         right = right_sorted[idx]
-        curr_res = abs(int(left) - int(right))
+        curr_res = abs(left - right)
         if DEBUG:
             print(left, right, curr_res)
         res += curr_res
