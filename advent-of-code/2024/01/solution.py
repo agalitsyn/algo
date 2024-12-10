@@ -1,20 +1,11 @@
 import os
 
+from lib import read_lines_from_file
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
 DEBUG = os.getenv("DEBUG", False)
-
-
-def read_lines_from_file(file_path: str) -> list[str]:
-    """
-    Reads lines from a file, trims whitespace, and ignores empty lines.
-
-    Args:
-    file_path (str): The path to the file to be read.
-
-    Returns:
-    list of str: The lines from the file.
-    """
-    with open(file_path, "r") as file:
-        return [line.strip() for line in file if line.strip()]
 
 
 def part_1(data: list[str]) -> int:
@@ -65,9 +56,9 @@ def part_2(data: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    file_path = "input.txt"
+    file_path = os.path.join(CURRENT_DIR, "input.txt")
     if DEBUG:
-        file_path = "example.txt"
+        file_path = os.path.join(CURRENT_DIR, "example.txt")
     data = read_lines_from_file(file_path)
     res_1 = part_1(data)
     print("part 1:", res_1)
