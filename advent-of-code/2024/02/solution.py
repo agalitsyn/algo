@@ -50,8 +50,53 @@ def part_1(data: list[str]) -> int:
     return safe_reports
 
 
+def check(items: list[int]) -> bool:
+    increasing = items[0] < items[1]
+    decreasing = items[0] > items[1]
+    if not (increasing or decreasing):
+        return False
+
+    verdict = False
+    prev = items[0]
+    for i in items[1:]:
+        verdict = False
+
+        # filter out lines like `86441`
+        if i == prev:
+            break
+
+        diff = abs(i - prev)
+        if DEBUG:
+            print(i, "prev =", prev, "diff =", diff)
+
+        # check increasing and decreasing constantly and check adjacent levels
+        if increasing and i > prev and diff >= 1 and diff <= 3:
+            verdict = True
+        elif decreasing and i < prev and diff >= 1 and diff <= 3:
+            verdict = True
+        else:
+            # means there is no sense to continue, this lline is not valid
+            return False
+
+        prev = i
+    return verdict
+
+
 def part_2(data: list[str]) -> int:
-    return 0
+    safe_reports = 0
+    for line in data:
+        items = [int(v) for v in line.split()]
+        if DEBUG:
+            print(items)
+
+            verdict = check(items)
+
+            if DEBUG:
+                print(verdict, "\n")
+            if verdict:
+                safe_reports += 1
+
+    return safe_reports
 
 
 if __name__ == "__main__":
