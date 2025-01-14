@@ -1,6 +1,6 @@
 import os
 
-from lib import read_lines_from_file
+from utils import read_lines_from_file
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
