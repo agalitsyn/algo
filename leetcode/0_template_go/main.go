@@ -1,15 +1,9 @@
-// Level:
-//
-// Source:
-//
-// Description:
-//
-// Example:
-// In:
-// Out:
+// Link
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func Solve(in bool) bool {
 	return in
