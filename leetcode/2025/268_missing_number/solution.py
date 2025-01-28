@@ -1,5 +1,8 @@
 """
 https://leetcode.com/problems/missing-number/
+
+level: easy
+tags: array
 """
 
 from typing import List
