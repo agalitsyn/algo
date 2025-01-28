@@ -1,8 +1,5 @@
 """
 https://leetcode.com/problems/NAME
-
-level: easy
-tags:
 """
 
 from typing import List
