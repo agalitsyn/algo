@@ -1,3 +1,11 @@
+"""
+https://leetcode.com/problems/valid-parentheses/
+
+level: easy
+tags: stack
+"""
+
+
 def isValid(s: str) -> bool:
     if (len(s) % 2) != 0:
         return False
