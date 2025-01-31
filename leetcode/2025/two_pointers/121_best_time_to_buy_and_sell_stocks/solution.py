@@ -1,21 +1,30 @@
 """
 https://leetcode.com/problems/missing-number/
+
+level: easy
+tags: two pointers
 """
 
 from typing import List
 
 
 def maxProfit(prices: List[int]) -> int:
+    # Левый указатель это первый день, правый это следующий за ним. Идем слева направо
     l = 0
     r = 1
     res = 0
 
+    # Пока правый указатель не достигнет конца массива
     while r < len(prices):
+        # Если цена в правом указателе больше чем в левом
         if prices[l] < prices[r]:
+            # Посчитать разницу между ценами и обновим результат, который хранит максимальную разницу
             tmp = prices[r] - prices[l]
             res = max(res, tmp)
         else:
+            # Если цена в правом указателе меньше чем в левом, обновим левый указатель
             l = r
+        # Всегда передвигаем правый указатель
         r += 1
 
     return res
