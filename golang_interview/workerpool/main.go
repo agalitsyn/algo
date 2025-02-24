@@ -21,7 +21,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	taskExecutor := NewTaskExecutor(ctx, 5, 10)
+	taskExecutor := NewTaskQueue(ctx, 5, 10)
 	defer taskExecutor.Stop()
 
 	for i := 0; i < 11; i++ {
@@ -37,7 +37,7 @@ type TaskQueue struct {
 	wg    sync.WaitGroup
 }
 
-func NewTaskExecutor(ctx context.Context, workersLimit int, tasksLimit int) *TaskQueue {
+func NewTaskQueue(ctx context.Context, workersLimit int, tasksLimit int) *TaskQueue {
 	wp := &TaskQueue{
 		tasks: make(chan Task, tasksLimit),
 	}
@@ -50,26 +50,26 @@ func NewTaskExecutor(ctx context.Context, workersLimit int, tasksLimit int) *Tas
 	return wp
 }
 
-func (te *TaskQueue) ScheduleTask(task Task) error {
+func (q *TaskQueue) ScheduleTask(task Task) error {
 	select {
-	case te.tasks <- task:
+	case q.tasks <- task:
 		return nil
 	default:
 		return fmt.Errorf("could not schedule task with id=%d", task.ID)
 	}
 }
 
-func (te *TaskQueue) Stop() {
-	close(te.tasks)
-	te.wg.Wait()
+func (q *TaskQueue) Stop() {
+	close(q.tasks)
+	q.wg.Wait()
 }
 
-func (te *TaskQueue) worker(ctx context.Context) {
-	defer te.wg.Done()
+func (q *TaskQueue) worker(ctx context.Context) {
+	defer q.wg.Done()
 
 	for {
 		select {
-		case task, ok := <-te.tasks:
+		case task, ok := <-q.tasks:
 			if !ok {
 				return
 			}

@@ -7,7 +7,7 @@ import (
 
 func TestTaskQueue(t *testing.T) {
 	ctx := context.Background()
-	q := NewTaskExecutor(ctx, 2, 3)
+	q := NewTaskQueue(ctx, 2, 3)
 	defer q.Stop()
 
 	// Test queue limit
